@@ -8,9 +8,11 @@ V_CONST = 10 ** 4
 
 
 class PointsInitializer:
-    def __init__(self, cluster_amount, image):
+    def __init__(self, cluster_amount, image, width, height):
         self.cluster_amount = cluster_amount
         self.image = image
+        self.width = width
+        self.height = height
 
     cluster_amount = 0
     image = None
@@ -19,8 +21,8 @@ class PointsInitializer:
     def initialize_centers_rand(self, centers_list):
         colour_converter = ColoursConverter()
         for i in range(self.cluster_amount):
-            X = random.randint(0, width)
-            Y = random.randint(0, hight)
+            X = random.randint(0, self.width)
+            Y = random.randint(0, self.height)
             R = self.image[X, Y][0]
             G = self.image[X, Y][1]
             B = self.image[X, Y][2]
@@ -29,11 +31,12 @@ class PointsInitializer:
             centers_list.append([X, Y, H_CONST * HSV[0], S_CONST * HSV[1], (V_CONST * HSV[2])])
         return centers_list
 
+    #using in k++ algorithm
     def initialize_centers(self, centers_list, points_l):
         distance = Distance()
         colour_converter = ColoursConverter()
-        X = random.randint(0, width)
-        Y = random.randint(0, hight)
+        X = random.randint(0, self.width)
+        Y = random.randint(0, self.height)
         R = self.image[X, Y][0]
         G = self.image[X, Y][1]
         B = self.image[X, Y][2]
